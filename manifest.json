@@ -6,7 +6,14 @@
   "permissions": ["activeTab", "scripting"],
   "background": {
     "service_worker": "background.js",
+    "scripts": ["background.js"],
     "type": "module"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "funfactgenerator@musfique-m.github.io",
+      "strict_min_version": "115.0"
+    }
   },
   "action": {
     "default_title": "Insert a random fun fact",
