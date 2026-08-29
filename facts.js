@@ -1,5 +1,5 @@
 // Hard-coded list of fun facts. Add or edit freely.
-const FUN_FACTS = [
+export const FUN_FACTS = [
     "Honey never spoils. Archaeologists have found 3,000-year-old honey in Egyptian tombs that's still edible.",
     "Octopuses have three hearts, nine brains, and blue blood.",
     "A group of flamingos is called a 'flamboyance'.",

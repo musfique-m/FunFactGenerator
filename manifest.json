@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "description": "Click the icon to drop a random fun fact into the focused text field (and copy it to your clipboard).",
   "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
     "default_title": "Insert a random fun fact",
     "default_popup": "popup.html",
@@ -11,6 +15,15 @@
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
+    }
+  },
+  "commands": {
+    "insert-fact": {
+      "suggested_key": {
+        "default": "Alt+R",
+        "mac": "Alt+R"
+      },
+      "description": "Insert a random fun fact into the focused text field"
     }
   },
   "icons": {
