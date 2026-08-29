@@ -32,8 +32,9 @@ A tiny Chromium (Chrome / Edge / Brave / Opera, Manifest V3) extension that drop
 | --- | --- |
 | [manifest.json](manifest.json) | MV3 manifest — permissions, background worker, popup, `Alt+Shift+Y` command. |
 | [popup.html](popup.html) / [popup.css](popup.css) / [popup.js](popup.js) | Popup UI and reroll logic. |
-| [background.js](background.js) | Service worker that handles the `Alt+Shift+Y` command. |
-| [shared.js](shared.js) | Shared helpers (`pickFactExcluding`, `insertIntoFocusedField`, `insertAtCursorInActiveTab`), imported as ES modules by both the popup and background. |
+| [background.js](background.js) | Service worker that handles the `Alt+Shift+Y` command and manages the offscreen document. |
+| [offscreen.html](offscreen.html) / [offscreen.js](offscreen.js) | Hidden document the service worker uses to reach `navigator.clipboard` (needed because MV3 service workers have no DOM). |
+| [shared.js](shared.js) | Shared helpers (`pickFactExcluding`, `insertIntoFocusedField`, `insertAtCursorInActiveTab`, `writeClipboardText`), imported as ES modules by the popup, background, and offscreen document. |
 | [facts.js](facts.js) | The fact list — edit freely to add your own. |
 | [icons/](icons) | 16 / 48 / 128 px toolbar icons. |
 
@@ -43,7 +44,10 @@ Open [facts.js](facts.js) and add strings to the `FUN_FACTS` array. Reload the e
 
 ## Permissions
 
-- `activeTab` + `scripting` — needed to run the insert-at-cursor helper in the current tab when you invoke the extension. No host permissions and no background page access to your browsing.
+- `activeTab` + `scripting` — run the insert-at-cursor helper in the current tab when you invoke the extension.
+- `offscreen` + `clipboardWrite` — copy the fact to the clipboard from a hidden extension document so the `Alt+Shift+Y` shortcut works even on protected pages (chrome://, Web Store, PDF viewer, new-tab).
+
+No host permissions, no network, no tracking.
 
 ## License
 

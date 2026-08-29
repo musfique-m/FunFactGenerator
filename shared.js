@@ -55,3 +55,21 @@ export async function insertAtCursorInActiveTab(text) {
     return false;
   }
 }
+
+// Writes `text` to the clipboard from a document context (popup or offscreen),
+// falling back to a hidden textarea + execCommand when the async API is blocked.
+export async function writeClipboardText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (_) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (_) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+}

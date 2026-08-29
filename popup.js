@@ -1,4 +1,4 @@
-import { pickFactExcluding, insertAtCursorInActiveTab } from "./shared.js";
+import { pickFactExcluding, insertAtCursorInActiveTab, writeClipboardText } from "./shared.js";
 
 const statusEl = document.getElementById("status");
 const factEl = document.getElementById("fact");
@@ -6,21 +6,6 @@ const hintEl = document.getElementById("hint");
 const rerollBtn = document.getElementById("reroll");
 
 let currentFact = null;
-
-async function copy(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch (_) {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand("copy");
-    document.body.removeChild(ta);
-    return ok;
-  }
-}
 
 async function showAndDeliver() {
   currentFact = pickFactExcluding(currentFact);
@@ -34,7 +19,7 @@ async function showAndDeliver() {
     return;
   }
 
-  if (await copy(currentFact)) {
+  if (await writeClipboardText(currentFact)) {
     statusEl.textContent = "✓ Copied to clipboard!";
     hintEl.textContent = "No text field focused — press ⌘V (or Ctrl+V) to paste.";
   } else {

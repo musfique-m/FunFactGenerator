@@ -3,7 +3,7 @@
   "name": "Fun Fact Generator",
   "version": "1.0.0",
   "description": "Click the icon to drop a random fun fact into the focused text field (and copy it to your clipboard).",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "offscreen", "clipboardWrite"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
